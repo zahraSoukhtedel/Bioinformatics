@@ -1,0 +1,179 @@
+---
+title: "Bio Project"
+output:
+  html_document: default
+  pdf_document: default
+date: "2022-12-15"
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "~/Desktop/bio_proj/")
+```
+##### Zahra Soukhtedel - 98105138
+##### Bahar Oveis Gharan - 98106242
+##### Lachin Naghashyar - 98110179
+
+```{r, message=FALSE, results='hide'}
+setwd("~/Desktop/bio_proj/")
+library(GEOquery)
+library(limma)
+library(umap)
+library(pheatmap)
+library(gplots)
+library(ggplot2)
+library(reshape2)
+library(plyr)
+library(Rtsne)
+library(umap)
+```
+
+##  Q1
+A microarray is a laboratory tool used to detect the expression of a lot of genes at the same time. In the general process in microarray experiments, we use enzymes to get rid of non-DNA substances and then we heat them to separate the DNA sequences from eachother, following this, we shake them so that they get partitioned with random sizes. Next, fluorescent dyes are used to label the extracted mRNAs or amplified cDNAs from the tissue or cell samples to be analyzed. The DNA array is then hybridized with the labeled sample(s) by incubating, usually overnight, and then washing to remove non-specific hybrids. A laser excites the attached fluorescent dyes to produce light which is detected by a scanner. The scanner generates a digital image from the excited microarray. The digital image is further processed by specialized software to transform the image of each spot (each spot on a microarray contains multiple identical strands of DNA and represents one gene) to a numerical reading. This process is performed, first, finding the specific location and shape of each spot, followed by the integration (summation) of intensities inside the defined spot, and, finally, estimating the surrounding background noise. Background noise generally is subtracted from the integrated signal. This final reading is an integer value assumed to be proportional to the concentration of the target.
+
+## Q2
+
+We can obtain the results.txt the same way as the videos from the GEO website.
+```{r}
+res <- read.delim("Results/results.txt")
+head(res)
+```
+
+Use the R script generated in the website for the specific data that's been chosen.
+```{r, message=FALSE}
+# load series and platform data from GEO
+series <- "GSE48558"
+gset <- getGEO(series, GSEMatrix =TRUE, AnnotGPL=TRUE, destdir = "Data/")
+if (length(gset) > 1) idx <- grep("GPL6244", attr(gset, "names")) else idx <- 1
+gset <- gset[[idx]]
+
+gr <- c(rep("AML",13), rep("X",27), "healthy", rep("X",3), "healthy", rep("X",23),  "healthy", "X","healthy",rep("X",3),"healthy","X", rep("healthy",4),"X","healthy",rep("X",2), rep("healthy",2), rep("X",2),rep("healthy",2), "X", "healthy","X", "healthy", "X", "healthy","X", "healthy","X", "healthy", rep("X",3), "healthy", rep("X",3), "healthy",rep("X",29),rep("healthy",7), rep("AML",2), "healthy", rep("AML",3),rep("healthy",20))
+
+ex <- exprs(gset)
+# ex <- log2(ex+1) if the values were large it means it needs log
+# exprs(gset) <- ex
+
+
+
+```
+### Quality Control
+In each step we might have some errors, hence we should always check the quality of data before proceeding to next steps.
+
+#### Normalization
+Raw gene expression data from the high-throughput technologies must be normalized to remove technical variation so that meaningful biological comparisons can be made. Data normalization is a crucial step in the gene expression analysis as it ensures the validity of its downstream analyses.
+First we check if data is normalized or not
+
+```{r, message=FALSE}
+#  the first step is to obtain a box plot to check if values are normalized or not
+
+pdf("Results/boxplot.pdf", width = 64)
+boxplot(ex)
+dev.off()
+```
+If we look at the distributions illustrated in the box plots, we can see that their distributions are close to each other and their boxed have a large overlap and the the medians are similar to each other. Hence, we don't need to normalize the data.
+Moreover, the values are under 20 which means they already have logarithmic scale.
+It seems that the data is normalized, however, we can also perform normalization on it using the code below, which is not necessary.
+```{r, message=FALSE}
+ex <-normalizeQuantiles(ex) 
+exprs(gset) <- ex
+```
+
+
+#### Correlation Heatmap 
+Correlation heatmaps can be used to find potential relationships between variables and to understand the strength of these relationships. In addition, correlation plots can be used to identify outliers and to detect linear and nonlinear relationships. The heatmap may also be combined with heirarchical clustering methods on rows and columns which group genes and/or samples together based on the similarity of their gene expression pattern in a heirarchical way.
+
+```{r, message=FALSE}
+pdf("Results/CorHeatmap.pdf", width=15, height=15)
+pheatmap(cor(ex), color=bluered(256), labels_col = gr, labels_row=gr, border_color = NA) 
+dev.off()
+```
+
+#### PCA
+which is a statistical procedure that allows you to summarize the information content in large data tables by means of a smaller set of “summary indices” that can be more easily visualized and analyzed. More details on its implemetation are in the quesion below.
+
+
+## Q3
+Dimensionality reduction finds a lower number of variables or removes the least important variables from the model and keeps the ones that preserve the most amount of variance in data. That will reduce the model's complexity and run time, also remove some noise in the data. In this way, dimensionality reduction helps to increase accuracy and mitigate overfitting and is a crucial preprocessing step for prediction and classification of disease.
+
+
+#### PCA 
+```{r, message=FALSE, results='hide'}
+dim(ex)
+pc <- prcomp(ex)
+pdf("Results/PC.pdf")
+plot(pc)
+plot(pc$x[,1:2]) # this plots the first two principal components
+dev.off()
+```
+As expected, most of the variace is along the first principal component. We can check the names and the dimension of the PC.
+```{r, message=FALSE, results='hide'}
+names(pc)
+dim(pc$x)
+```
+We can also scale the PCs by subtracting the mean of each component.PCA will be extremely biased towards the first feature being the first principle component, regardless of the actual maximum variance within the data. This is why it's so important to standardize the values first.
+```{r, message=FALSE, results='hide'}
+ex.scale <- t(scale(t(ex), scale = FALSE)) #we don't want to eliminate variance
+# mean(ex.scale[,1])
+pc <- prcomp(ex.scale)
+pdf("Results/PC_scaled.pdf")
+plot(pc)
+plot(pc$x[,1:2])
+dev.off()
+```
+
+```{r, message=FALSE, results='hide'}
+pcr <- data.frame(pc$r[,1:2], Group=gr)
+head(pcr)
+pdf("Results/PCA_samples.pdf")
+ggplot(pcr, aes(PC1, PC2, color=Group)) + geom_point(size=3) + geom_point(size=3) + theme_bw()
+dev.off()
+```
+
+#### t-SNE
+
+t-distributed Stochastic Neighborhood Embedding (t-SNE), is an unsupervised, non-linear technique primarily used for clustering and visualizing high-dimensional data.t-SNE gives you a feel or intuition of how the data is arranged in a high-dimensional space and it has become a standard tool in a number of natural sciences.
+```{r, message=FALSE, results='hide'}
+tsne <- Rtsne(t(ex), perplexity=7, check_duplicates = FALSE)
+pdf("Results/t-SNE.pdf")
+plot(tsne$Y)
+dev.off()
+
+tsne_df <- data.frame(tsne$Y, Group=gr)
+pdf("Results/t-SNE_samples.pdf")
+ggplot(tsne_df, aes(X1, X2, color=Group)) + geom_point(size=3)+ geom_point(size=3)  + theme_bw()
+dev.off()
+```
+
+
+#### MDS
+Multidimensional scaling (MDS) is a means of visualizing the level of similarity of individual cases of a dataset. MDS is used to translate "information about the pairwise 'distances' among a set of n objects or individuals" into a configuration of n points mapped into an abstract Cartesian space.
+```{r, message=FALSE, results='hide'}
+ex_new <- cmdscale(dist(t(ex)))
+pdf("Results/MDS.pdf")
+plot(ex_new[,1], ex_new[,2])
+dev.off()
+
+pdf("Results/MDS_samples.pdf")
+ggplot(data.frame(ex_new[,1:2], Group=gr), aes(X1, X2, color=Group)) + geom_point(size=3) + geom_point(size=3) +  theme_bw()
+dev.off()
+```
+
+
+From the results above, it seems that t-SNE is more successful in clustering the AML and healthy samples. In the other two, points are not separated efficiently and we can not identify the clusters clearly (using those two dimensions can not separate data in two groups) 
+Hence, we apply t-SNE on the data and obtain
+
+## Q4
+
+#### source name
+It indicates which cell does this sample corresponds to. For a given phenotype, we may use different cells for each and the reason for this is that sometimes, number of samples from just one cell are not enough and we should use other similar cells to have more data.  
+
+```{r, results='hide', message=FALSE}
+gr <- c(rep("AML",13), rep("X",27), "Granulocytes", rep("X",3), "Granulocytes", rep("X",23),  "Bcell", "X","Tcell",rep("X",3),"Granulocytes","X", "Granulocytes","Monocytes","Monocytes","Bcell","X","Tcell",rep("X",2), rep("Tcell",2), rep("X",2),rep("Tcell",2), "X", "Bcell","X", "Tcell", "X", "Bcell","X", "Tcell","X", "CD34", rep("X",3), "CD34", rep("X",3), "CD34",rep("X",29),rep("Granulocytes",7), rep("AML",2), "Tcell", rep("AML",3),rep("Bcell",7),"Tcell",rep("Monocytes",4),"Granulocytes",rep("Tcell",7))
+
+pdf("Results/CorHeatmap_q4.pdf", width=15, height=15)
+pheatmap(cor(ex), color=bluered(256), labels_col = gr, labels_row=gr, border_color = NA) 
+dev.off()
+```
+
+Using the heatmap results, we can infer that cell types CD34 and Monocytes have the most amount of correlation with AML cell types (we have also included a pdf file "heatmap_eval.pdf" to better illustrate this). This is obtained using the fact that red cells have higher correlation and that in the hierarchical clustering process, these have got grouped together in the early steps which approves our claim.

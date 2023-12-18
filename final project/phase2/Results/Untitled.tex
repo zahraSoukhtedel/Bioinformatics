@@ -1,0 +1,336 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Bio Project},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Bio Project}
+\author{}
+\date{\vspace{-2.5em}2022-12-15}
+
+\begin{document}
+\maketitle
+
+\hypertarget{zahra-soukhtedel---98105138}{%
+\subparagraph{Zahra Soukhtedel -
+98105138}\label{zahra-soukhtedel---98105138}}
+
+\hypertarget{bahar-oveis-gharan---98106242}{%
+\subparagraph{Bahar Oveis Gharan -
+98106242}\label{bahar-oveis-gharan---98106242}}
+
+\hypertarget{lachin-naghashyar---98110179}{%
+\subparagraph{Lachin Naghashyar -
+98110179}\label{lachin-naghashyar---98110179}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"\textasciitilde{}/Desktop/bio\_proj/"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(GEOquery)}
+\FunctionTok{library}\NormalTok{(limma)}
+\FunctionTok{library}\NormalTok{(umap)}
+\FunctionTok{library}\NormalTok{(pheatmap)}
+\FunctionTok{library}\NormalTok{(gplots)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(reshape2)}
+\FunctionTok{library}\NormalTok{(plyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{q1}{%
+\subsection{Q1}\label{q1}}
+
+\hypertarget{q2}{%
+\subsection{Q2}\label{q2}}
+
+If we look at the distributions illustrated in the box plots, we can see
+that their distributions are close to each other and their boxed have a
+large overlap and the the medians are similar to each other. Hence, we
+don't need to normalize the data. Moreover, the values are under 20
+which means they already have logarithmic scale.
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{Data/dists_boxplot} \caption{A caption}\label{fig:pressure}
+\end{figure}
+
+We can also obtain the results.txt the same way as the videos from the
+GEO website.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OtherTok{\textless{}{-}} \FunctionTok{read.delim}\NormalTok{(}\StringTok{"Results/results.txt"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(res)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        ID adj.P.Val  P.Value         t        B     logFC Gene.symbol
+## 1 8016932  3.62e-19 1.12e-23 -15.30903 43.23352 -5.563501         MPO
+## 2 7970737  4.84e-19 2.99e-23 -15.02516 42.28692 -5.250065        FLT3
+## 3 7989647  6.31e-19 5.86e-23 -14.83304 41.64005 -4.559135    KIAA0101
+## 4 7982663  1.66e-18 2.06e-22 -14.47666 40.42674 -2.756554       BUB1B
+## 5 8083422  1.94e-18 3.00e-22 -14.37104 40.06382 -2.996816      SUCNR1
+## 6 7926259  3.71e-18 6.89e-22 -14.13865 39.25991 -2.318848       MCM10
+##                                                    Gene.title
+## 1                                             myeloperoxidase
+## 2                               fms related tyrosine kinase 3
+## 3                                                    KIAA0101
+## 4           BUB1 mitotic checkpoint serine/threonine kinase B
+## 5                                        succinate receptor 1
+## 6 minichromosome maintenance 10 replication initiation factor
+\end{verbatim}
+
+Use the R script generated in the website for the specific data that's
+been chosen.
+
+\begin{verbatim}
+## Found 1 file(s)
+\end{verbatim}
+
+\begin{verbatim}
+## GSE48558_series_matrix.txt.gz
+\end{verbatim}
+
+\begin{verbatim}
+## Using locally cached version: Data//GSE48558_series_matrix.txt.gz
+\end{verbatim}
+
+\begin{verbatim}
+## Using locally cached version of GPL6244 found here:
+## Data//GPL6244.annot.gz
+\end{verbatim}
+
+\hypertarget{quality-control}{%
+\subsubsection{Quality Control}\label{quality-control}}
+
+In each step we might have some errors, hence we should always check the
+quality of data before proceeding to next steps.
+
+\hypertarget{normalization}{%
+\paragraph{Normalization}\label{normalization}}
+
+Raw gene expression data from the high-throughput technologies must be
+normalized to remove technical variation so that meaningful biological
+comparisons can be made. Data normalization is a crucial step in the
+gene expression analysis as it ensures the validity of its downstream
+analyses. \textbackslash{} First we check if data is normalized or not
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+It seems that the data is normalized, however, we can also perform
+normalization on it using the code below, which is not necessary.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ex }\OtherTok{\textless{}{-}}\FunctionTok{normalizeQuantiles}\NormalTok{(ex) }
+\FunctionTok{exprs}\NormalTok{(gset) }\OtherTok{\textless{}{-}}\NormalTok{ ex}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{correlation-heatmap}{%
+\paragraph{Correlation Heatmap}\label{correlation-heatmap}}
+
+Correlation heatmaps can be used to find potential relationships between
+variables and to understand the strength of these relationships. In
+addition, correlation plots can be used to identify outliers and to
+detect linear and nonlinear relationships. The heatmap may also be
+combined with heirarchical clustering methods on rows and columns which
+group genes and/or samples together based on the similarity of their
+gene expression pattern in a heirarchical way.
+
+\begin{verbatim}
+## pdf 
+##   3
+\end{verbatim}
+
+\hypertarget{pca}{%
+\paragraph{PCA}\label{pca}}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+As expected, most of the variace is along the first principal component.
+We can check the names and the dimension of the PC.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(pc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "sdev"     "rotation" "center"   "scale"    "x"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(pc}\SpecialCharTok{$}\NormalTok{x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 32321   170
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# colnames(pc$x)}
+\end{Highlighting}
+\end{Shaded}
+
+We can also scale the PCs by subtracting the mean of each component.PCA
+will be extremely biased towards the first feature being the first
+principle component, regardless of the actual maximum variance within
+the data. This is why it's so important to standardize the values first.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ex.scale }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(}\FunctionTok{scale}\NormalTok{(}\FunctionTok{t}\NormalTok{(ex), }\AttributeTok{scale =} \ConstantTok{FALSE}\NormalTok{)) }\CommentTok{\#we don\textquotesingle{}t want to eliminate variance}
+\CommentTok{\# mean(ex.scale[,1])}
+\NormalTok{pc }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(ex.scale)}
+\FunctionTok{pdf}\NormalTok{(}\StringTok{"Results/PC\_scaled.pdf"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(pc)}
+\FunctionTok{plot}\NormalTok{(pc}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{])}
+\FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pcr }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(pc}\SpecialCharTok{$}\NormalTok{r[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{], }\AttributeTok{Group=}\NormalTok{gr)}
+\FunctionTok{head}\NormalTok{(pcr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                     PC1        PC2           PC3 Group
+## GSM1180750 -0.031565140 0.07162482  0.0144240962   AML
+## GSM1180751 -0.055489995 0.09074739  0.0014317626   AML
+## GSM1180752 -0.017952039 0.02903359 -0.0024554711   AML
+## GSM1180753 -0.071985213 0.12583838  0.0008634052   AML
+## GSM1180754  0.006820641 0.03727649 -0.0019770972   AML
+## GSM1180755 -0.051211058 0.06196639 -0.0144744377   AML
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pdf}\NormalTok{(}\StringTok{"Results/PCA\_samples.pdf"}\NormalTok{)}
+\FunctionTok{ggplot}\NormalTok{(pcr, }\FunctionTok{aes}\NormalTok{(PC1, PC2, }\AttributeTok{color=}\NormalTok{Group)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_bw}\NormalTok{()}
+\FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+\end{document}
